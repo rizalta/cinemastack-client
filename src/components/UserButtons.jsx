@@ -1,0 +1,45 @@
+import userLogo from "../assets/user.png";
+import DarkModeToggle from "./DarkModeToggle";
+import logOut from "../assets/sign-out.svg";
+
+import { authActions } from "../features/AuthSlice";
+
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+
+const UserButtons = () => {
+  const user = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(authActions.logout());
+  }
+
+  return (
+    <div className="dropdown dropdown-end">
+      <label tabIndex={0} className="btn btn-circle btn-accent p-1">
+        <img src={userLogo} />
+      </label>
+      <div tabIndex={0} className="px-4 py-7 card dropdown-content shadow-xl bg-base-200 min-w-[250px]">
+        <h1 className="card-title self-center">{user ? user.username : "You are not signed in"}</h1>
+        {user ? <ul className="menu text-lg">
+          <li><a>My Account</a></li>
+          <li><a>My Stacks</a></li>
+        </ul> :
+        <div className="card-actions">
+          <Link to="/login">
+            <button className="btn btn-secondary mt-10 mb-4 btn-wide">Log In</button>  
+          </Link>
+          <Link to="/register">
+            <button className="btn btn-primary mb-4 btn-wide">Register</button>  
+          </Link>
+        </div>
+        }
+        <div className="card-actions justify-evenly gap-2">
+          <DarkModeToggle />
+          {user && <button className="btn btn-circle" onClick={handleLogout}><img src={logOut} className="w-9 h-9"/></button>}
+        </div>
+      </div>
+    </div>
+  )
+}
+export default UserButtons;
