@@ -17,7 +17,7 @@ const DarkModeToggle = () => {
   useEffect(() => {
     localStorage.setItem("theme", theme);
     document.querySelector("html").setAttribute("data-theme", theme);
-    document.getElementById("logo").setAttribute("src", theme + "Logo.png");
+    document.getElementById("logo").setAttribute("src", "/" + theme + "Logo.png");
   }, [theme]);
 
   return (

@@ -1,6 +1,12 @@
-const MovieDetails = ({ movie }) => {
+import { useParams } from "react-router-dom";
+
+const MovieDetails = () => {
+  const { id } = useParams();
+
   return (
-    <div>{movie.title}</div>
+    <div className="flex justify-center items-center">
+      <div className="mt-[100px]">{id}</div>
+    </div>
   )
 }
 export default MovieDetails;

@@ -15,7 +15,7 @@ const ListDropdown = ({ movie }) => {
       <label tabIndex={0} className="btn btn-primary">Add</label>
       <ul tabIndex={0} className="dropdown-content menu z-[1] shadow bg-base-100">
         {stacks.map((stack) => (
-          <li><label>
+          <li key={stack.name}><label>
             <input 
               type="checkbox" className="checkbox"
               defaultChecked={stack.stack.includes(movie.id)}
