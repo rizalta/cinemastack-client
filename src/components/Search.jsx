@@ -29,7 +29,7 @@ const Search = () => {
   return (
     <form className="dropdown" onSubmit={handleSubmit}>
       <input 
-        type="text" className="input" tabIndex={0} 
+        type="text" className="input input-bordered" tabIndex={0} 
         placeholder="Search"
         onChange={handleSearch}
       />

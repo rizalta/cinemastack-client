@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import ListDropdown from "./ListDropdown";
+import StacksDropdown from "./StacksDropdown";
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, stacks }) => {
   const POSTER_BASE = 'https://image.tmdb.org/t/p/w400/';
 
   return (
@@ -10,8 +10,8 @@ const MovieCard = ({ movie }) => {
       <div className="card-body">
         <Link to={`/movie/${movie.id}`}><h1 className="card-title">{movie.title}</h1></Link>
         <p>{movie.overview}</p>
-        <div className="card-actions justify-center">
-          <ListDropdown movie={movie} />
+        <div className="card-actions justify-end">
+          <StacksDropdown movie={movie} stacks={stacks} />
         </div>
       </div> 
     </div>

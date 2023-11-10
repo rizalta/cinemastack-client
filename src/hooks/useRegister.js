@@ -30,6 +30,7 @@ const useRegister = () => {
       setLoading(false);
       setError("");
       dispatch(authActions.login(json));
+      localStorage.setItem("auth", JSON.stringify(json));
     }
   }
 

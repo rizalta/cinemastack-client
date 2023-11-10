@@ -4,11 +4,12 @@ import MovieGrid from "../components/MovieGrid";
 const Home = () => {
   const [movies, setMovies] = useState([]);
   const [tab, setTab] = useState("trending");
+  const apiUrl = import.meta.env.VITE_API_BASE_URL + "movies/";
 
   useEffect(() => {
     const getMovies = async () => {
       try{
-        const res = await fetch("http://localhost:4500/api/movies/" + tab);
+        const res = await fetch(apiUrl + tab);
         const json = await res.json();
 
         setMovies(json);
@@ -21,7 +22,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="tabs pt-[100px]">
+      <div className="tabs pt">
         <a
           className={`tab tab-bordered ${tab === "trending" && "tab-active"}`}
           onClick={() => setTab("trending")}

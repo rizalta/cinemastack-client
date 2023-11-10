@@ -22,7 +22,6 @@ const SearchResults = () => {
 
   return (
     <>
-      <div className="pt-[80px]"></div>
       <h1 className="text-2xl">{'Search results for ' + '"' + query + ' " :'}</h1>
       <MovieGrid movies={movies} />
     </>

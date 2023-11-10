@@ -12,6 +12,7 @@ const UserButtons = () => {
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(authActions.logout());
+    localStorage.removeItem("auth");
   }
 
   return (
@@ -23,7 +24,7 @@ const UserButtons = () => {
         <h1 className="card-title self-center">{user ? user.username : "You are not signed in"}</h1>
         {user ? <ul className="menu text-lg">
           <li><a>My Account</a></li>
-          <li><a>My Stacks</a></li>
+          <li><Link to="/stacks">My Stacks</Link></li>
         </ul> :
         <div className="card-actions">
           <Link to="/login">
