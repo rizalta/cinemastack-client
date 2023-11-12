@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import StacksDropdown from "./StacksDropdown";
+import { useSelector } from "react-redux";
 
-const MovieCard = ({ movie, stacks }) => {
+const MovieCard = ({ movie, stacks, setStacks }) => {
   const POSTER_BASE = 'https://image.tmdb.org/t/p/w400/';
+  const isAuth = useSelector((state) => state.auth.isAuthenticated);
 
   return (
     <div className="card overflow-hidden image-full z-[2]">
@@ -11,7 +13,9 @@ const MovieCard = ({ movie, stacks }) => {
         <Link to={`/movie/${movie.id}`}><h1 className="card-title">{movie.title}</h1></Link>
         <p>{movie.overview}</p>
         <div className="card-actions justify-end">
-          <StacksDropdown movie={movie} stacks={stacks} />
+          {isAuth ? 
+          <StacksDropdown movie={movie} stacks={stacks} setStacks={setStacks} /> : 
+          <button className="btn btn-disabled glass">Add</button>}
         </div>
       </div> 
     </div>

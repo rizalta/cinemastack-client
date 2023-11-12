@@ -26,7 +26,7 @@ const useStacks = () => {
     {user && getStacks()};
   }, [stacks])
 
-  return stacks;
+  return [stacks, setStacks];
 }
 
 export default useStacks;
