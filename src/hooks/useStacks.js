@@ -11,6 +11,7 @@ const useStacks = () => {
       const res = await fetch(apiUrl, {
         headers: {
           "Authorization": `Bearer ${user.token}`,
+          "Content-type": "application/json",
         },
       });
       const json = await res.json();
