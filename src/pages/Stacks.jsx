@@ -1,5 +1,7 @@
 import checkIcon from "../assets/check.png";
 import closeIcon from "../assets/close.png";
+import deleteIcon from "../assets/delete.png";
+
 import useStacks from "../hooks/useStacks";
 import Stack from "../components/Stack";
 import { useState } from "react";
@@ -76,15 +78,7 @@ const Stacks = () => {
         </button>}
       </div>
       {stacks && stacks.map((stack) => (
-        <div key={stack._id} className="collapse collapse-plus bg-base-200 py-2 my-2">
-          <input type="radio" name="stacks"/>
-          <div className="collapse-title text-xl font-medium">
-            {stack.name}
-          </div>
-          <div className="collapse-content">
-            <Stack stack={stack}/>
-          </div>
-        </div>
+        <Stack stack={stack} setStacks={setStacks} key={stack._id} />
       ))}
     </div>
   )
