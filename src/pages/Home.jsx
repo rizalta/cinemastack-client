@@ -22,27 +22,31 @@ const Home = () => {
 
   return (
     <>
-      <div className="tabs pt">
+      <div role="tabslist" className="tabs tabs-bordered">
         <a
-          className={`tab tab-bordered ${tab === "trending" && "tab-active"}`}
+          role="tab"
+          className={`tab ${tab === "trending" && "tab-active"}`}
           onClick={() => setTab("trending")}
         >
           Trending
         </a>
         <a
-          className={`tab tab-bordered ${tab === "nowrunning" && "tab-active"}`}
+          role="tab"
+          className={`tab ${tab === "nowrunning" && "tab-active"}`}
           onClick={() => setTab("nowrunning")}
         >
           Now Running
         </a>
         <a
-          className={`tab tab-bordered ${tab === "popular" && "tab-active"}`}
+          role="tab"
+          className={`tab ${tab === "popular" && "tab-active"}`}
           onClick={() => setTab("popular")}
         >
           Popular
         </a>
         <a
-          className={`tab tab-bordered ${tab === "upcoming" && "tab-active"}`}
+          role="tab"
+          className={`tab ${tab === "upcoming" && "tab-active"}`}
           onClick={() => setTab("upcoming")}
         >
           Upcoming

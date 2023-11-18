@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-import darkMode from "../assets/dark.svg";
-import lightMode from "../assets/light.svg";
 
 const DarkModeToggle = () => {
   const [theme, setTheme] = useState(
@@ -16,18 +14,14 @@ const DarkModeToggle = () => {
 
   useEffect(() => {
     localStorage.setItem("theme", theme);
-    document.querySelector("html").setAttribute("data-theme", theme);
     document.getElementById("logo").setAttribute("src", "/" + theme + "Logo.png");
   }, [theme]);
 
   return (
-    <label className="swap swap-rotate btn btn-circle">
-      <input 
-        type="checkbox" onChange={handleToggle} id="toggleDark" 
-        checked={theme === "light"? true : false} 
-      />
-      <img src={darkMode} className="swap-off fill-current w-10 h-10" />
-      <img src={lightMode} className="swap-on fill-current w-10 h-10" />
+    <label className="flex cursor-pointer gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      <input type="checkbox" value="light" className="toggle theme-controller" onChange={handleToggle} defaultChecked={theme === "light" ? true : false} />
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
     </label>
   )
 }

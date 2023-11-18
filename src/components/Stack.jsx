@@ -12,9 +12,9 @@ const Stack = ({ stack, setStacks }) => {
   const token = useSelector((state) => state.auth.user.token);
   const [movies, setMovies] = useState([]);
   const [deleteToggle, setDeleteToggle] = useState(false);
+  const [editToggle, setEditToggle] = useState(false);
   const apiUrl = import.meta.env.VITE_API_BASE_URL + "stacks/";
   const stackId = stack._id;
-  const [editToggle, setEditToggle] = useState(false);
 
   useEffect(() => {
     const getStack = async () => {
@@ -31,6 +31,7 @@ const Stack = ({ stack, setStacks }) => {
           setMovies(json);
         }
       } catch (error) {
+        console.log(error);
       }
     }
     getStack();
@@ -38,7 +39,7 @@ const Stack = ({ stack, setStacks }) => {
 
   const handleDelete = async () => {
     try {
-      const res = await fetch(apiUrl + "delete", {
+      const res = await fetch(apiUrl, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -58,53 +59,37 @@ const Stack = ({ stack, setStacks }) => {
     }
   }
 
+  const updateMovies = (movieId) => {
+    setMovies(movies.filter((movie) => movie.id !== movieId));
+  }
+
   return (
-    <div tabIndex={0} className="collapse collapse-plus bg-base-200 py-2 my-2">
+    <div tabIndex={0} className={`collapse collapse-plus bg-base-200 py-2 my-2 ${editToggle && "collapse-open"}`}>
       <div className="collapse-title text-xl flex justify-between items-center py-0 font-bold">
-        {/* {editToggle ?
-        <div className="flex gap-2 items-center">
-          <input type="text" className="input" />
-          <button 
-            className="btn glass btn-circle btn-sm"
-            onClick={() => setEditToggle(!editToggle)}
-          >
-            <img src={checkIcon} />
-          </button>
-          <button 
-            className="btn glass btn-circle btn-sm"
-            onClick={() => setEditToggle(!editToggle)}
-          >
-            <img src={closeIcon} />
-          </button>
-        </div> :
-        <div className="flex gap-2 items-center">
-          <p>{stack.name}</p>
-          <button 
-            className="btn glass btn-circle btn-sm"
-            onClick={() => setEditToggle(!editToggle)}
-          >
-            <img src={editIcon} />
-          </button>
-        </div>} */}
         <StackTitle stack={stack} />
-        {deleteToggle ?
-        <div className="flex justify-center items-center">
-          <p>Delete this stack?</p>
-          <button className="btn btn-circle btn-primary" onClick={handleDelete}>
-            <img src={checkIcon} />
+        <div className="flex gap-2">
+          <button className="btn btn-outline" onClick={() => setEditToggle(!editToggle)}>
+            {editToggle ? "Confirm" : "Edit Stack"}
           </button>
-          <button className="btn btn-circle glass" onClick={() => setDeleteToggle(!deleteToggle)}>
-            <img src={closeIcon} />
-          </button>
-        </div>:
-        <button className="btn btn-square btn-accent" onClick={() => setDeleteToggle(!deleteToggle)}>
-          <img src={deleteIcon} />
-        </button>}
+          {deleteToggle ?
+          <div className="flex justify-center items-center">
+            <p>Delete this stack?</p>
+            <button className="btn btn-circle btn-primary" onClick={handleDelete}>
+              <img src={checkIcon} />
+            </button>
+            <button className="btn btn-circle glass" onClick={() => setDeleteToggle(!deleteToggle)}>
+              <img src={closeIcon} />
+            </button>
+          </div>:
+          <button className="btn btn-square btn-accent" onClick={() => setDeleteToggle(!deleteToggle)}>
+            <img src={deleteIcon} />
+          </button>}
+        </div>
       </div>
       <div className="collapse-content">
         <div className="carousel rounded-box">
           {movies.length > 0 ? movies.map((movie) => (
-            <StackItem movie={movie} key={movie.id}/>
+            <StackItem stackId={stackId} movie={movie} key={movie.id} editToggle={editToggle} updateMovies={updateMovies} />
           )) :
           <div className="flex flex-col justify-center items-center">
             <p className="text-xl">This Stack is empty</p>

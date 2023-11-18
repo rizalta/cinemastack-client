@@ -25,6 +25,7 @@ const UserButtons = () => {
         {user ? <ul className="menu text-lg">
           <li><a>My Account</a></li>
           <li><Link to="/stacks">My Stacks</Link></li>
+          <li onClick={handleLogout}><a>Logout</a></li>
         </ul> :
         <div className="card-actions">
           <Link to="/login">
@@ -35,10 +36,7 @@ const UserButtons = () => {
           </Link>
         </div>
         }
-        <div className="card-actions justify-evenly gap-2">
-          <DarkModeToggle />
-          {user && <button className="btn btn-circle" onClick={handleLogout}><img src={logOut} className="w-9 h-9"/></button>}
-        </div>
+        <span className="self-center"><DarkModeToggle /></span>
       </div>
     </div>
   )
