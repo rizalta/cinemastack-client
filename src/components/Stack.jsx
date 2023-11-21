@@ -1,7 +1,6 @@
 import deleteIcon from "../assets/delete.png";
 import checkIcon from "../assets/check.png";
 import closeIcon from "../assets/close.png";
-import editIcon from "../assets/edit.png";
 
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -13,31 +12,39 @@ const Stack = ({ stack, setStacks }) => {
   const [movies, setMovies] = useState([]);
   const [deleteToggle, setDeleteToggle] = useState(false);
   const [editToggle, setEditToggle] = useState(false);
+  const [getLoading, setGetLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const apiUrl = import.meta.env.VITE_API_BASE_URL + "stacks/";
   const stackId = stack._id;
 
   useEffect(() => {
     const getStack = async () => {
+      setGetLoading(true);
       try {
         const res = await fetch(apiUrl + stackId, {
           headers: {
             "Authorization": `Bearer ${token}`,
-            "Content-type": "application/json",
+            "Content-Type": "application/json",
           }
         });
         const json = await res.json();
         
         if (res.ok) {
           setMovies(json);
+        } else {
+          console.log(json)
         }
       } catch (error) {
-        console.log(error);
+        console.log(json.error);
+      } finally {
+        setGetLoading(false);
       }
     }
     getStack();
-  }, []);
+  }, [stackId]);
 
   const handleDelete = async () => {
+    setDeleteLoading(true);
     try {
       const res = await fetch(apiUrl, {
         method: "DELETE",
@@ -56,6 +63,8 @@ const Stack = ({ stack, setStacks }) => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setDeleteLoading(false);
     }
   }
 
@@ -69,13 +78,14 @@ const Stack = ({ stack, setStacks }) => {
         <StackTitle stack={stack} />
         <div className="flex gap-2">
           <button className="btn btn-outline" onClick={() => setEditToggle(!editToggle)}>
-            {editToggle ? "Confirm" : "Edit Stack"}
+            {editToggle ? "Done" : "Edit Stack"}
           </button>
           {deleteToggle ?
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center gap-2">
             <p>Delete this stack?</p>
             <button className="btn btn-circle btn-primary" onClick={handleDelete}>
-              <img src={checkIcon} />
+              {deleteLoading ? <span className="loading"></span> :
+              <img src={checkIcon} />}
             </button>
             <button className="btn btn-circle glass" onClick={() => setDeleteToggle(!deleteToggle)}>
               <img src={closeIcon} />
@@ -87,13 +97,15 @@ const Stack = ({ stack, setStacks }) => {
         </div>
       </div>
       <div className="collapse-content">
-        <div className="carousel rounded-box">
-          {movies.length > 0 ? movies.map((movie) => (
-            <StackItem stackId={stackId} movie={movie} key={movie.id} editToggle={editToggle} updateMovies={updateMovies} />
-          )) :
+        <div className="carousel gap-2">
+          {movies.length === 0 && !getLoading ? 
           <div className="flex flex-col justify-center items-center">
             <p className="text-xl">This Stack is empty</p>
-          </div>}
+          </div> :
+          movies.map((movie) => (
+            <StackItem stackId={stackId} movie={movie} key={movie.id} editToggle={editToggle} updateMovies={updateMovies} />
+          ))}
+          {getLoading && <span className="loading loading-bars loading-lg"></span>}
         </div>
       </div>
     </div>

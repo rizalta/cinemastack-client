@@ -24,7 +24,7 @@ const App = () => {
           <Route path="register" element={!isAuthenticated ? <Register /> : <Navigate to="/" />} />
           <Route path="movie/:id" element={<MovieDetails />} />
           <Route path="search/:query" element={<SearchResults />} />
-          <Route path="stacks" element={<Stacks />} />
+          <Route path="stacks" element={isAuthenticated ? <Stacks /> : <Navigate to="/login" />} />
         </Route>
       </Routes>
     </>
