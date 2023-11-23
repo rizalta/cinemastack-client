@@ -13,6 +13,7 @@ const Stack = ({ stack, setStacks }) => {
   const [deleteToggle, setDeleteToggle] = useState(false);
   const [editToggle, setEditToggle] = useState(false);
   const [getLoading, setGetLoading] = useState(false);
+  const [openToggle, setOpenToggle] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const apiUrl = import.meta.env.VITE_API_BASE_URL + "stacks/";
   const stackId = stack._id;
@@ -32,10 +33,10 @@ const Stack = ({ stack, setStacks }) => {
         if (res.ok) {
           setMovies(json);
         } else {
-          console.log(json)
+          console.log(json.error)
         }
       } catch (error) {
-        console.log(json.error);
+        console.log(error);
       } finally {
         setGetLoading(false);
       }
@@ -73,12 +74,19 @@ const Stack = ({ stack, setStacks }) => {
   }
 
   return (
-    <div tabIndex={0} className={`collapse collapse-plus bg-base-200 py-2 my-2 ${editToggle && "collapse-open"}`}>
+    <div tabIndex={0} className={`collapse collapse-plus bg-base-200 py-2 my-2 ${openToggle ? "collapse-open" : "collapse-close"}`}>
       <div className="collapse-title text-xl flex justify-between items-center py-0 font-bold">
         <StackTitle stack={stack} />
         <div className="flex gap-2">
-          <button className="btn btn-outline" onClick={() => setEditToggle(!editToggle)}>
+          {openToggle &&
+          <button 
+            className={`btn btn-outline ${editToggle ? "btn-primary" : "btn-secondary"}`}
+            onClick={() => setEditToggle(!editToggle)}>
             {editToggle ? "Done" : "Edit Stack"}
+          </button>
+          }
+          <button className="btn btn-outline" onClick={() => setOpenToggle(!openToggle)}>
+            {openToggle ? "Close" : "Open"}
           </button>
           {deleteToggle ?
           <div className="flex justify-center items-center gap-2">
