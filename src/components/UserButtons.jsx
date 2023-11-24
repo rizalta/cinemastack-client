@@ -1,6 +1,5 @@
 import userLogo from "../assets/user.png";
 import DarkModeToggle from "./DarkModeToggle";
-import logOut from "../assets/sign-out.svg";
 
 import { authActions } from "../features/AuthSlice";
 
@@ -17,13 +16,13 @@ const UserButtons = () => {
 
   return (
     <div className="dropdown dropdown-end">
-      <label tabIndex={0} className="btn btn-circle btn-accent p-1">
+      <label tabIndex={0} className="btn btn-circle btn-accent p-2">
         <img src={userLogo} />
       </label>
       <div tabIndex={0} className="px-4 py-7 card dropdown-content shadow-xl bg-base-200 min-w-[250px]">
         <h1 className="card-title self-center">{user ? user.username : "You are not signed in"}</h1>
         {user ? <ul className="menu text-lg">
-          <li><a>My Account</a></li>
+          <li><Link to="/account">My Account</Link></li>
           <li><Link to="/stacks">My Stacks</Link></li>
           <li onClick={handleLogout}><a>Logout</a></li>
         </ul> :

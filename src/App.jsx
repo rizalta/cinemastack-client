@@ -4,11 +4,11 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import MovieDetails from "./pages/MovieDetails";
 import SearchResults from "./pages/SearchResults";
-
+import Stacks from "./pages/Stacks";
+import Account from "./pages/Account";
 
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Stacks from "./pages/Stacks";
 
 const App = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -25,6 +25,7 @@ const App = () => {
           <Route path="movie/:id" element={<MovieDetails />} />
           <Route path="search/:query" element={<SearchResults />} />
           <Route path="stacks" element={isAuthenticated ? <Stacks /> : <Navigate to="/login" />} />
+          <Route path="account" element={isAuthenticated ? <Account /> : <Navigate to="/login" />} />
         </Route>
       </Routes>
     </>
