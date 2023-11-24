@@ -11,8 +11,9 @@ const Home = () => {
       try{
         const res = await fetch(apiUrl + tab);
         const json = await res.json();
-
-        setMovies(json);
+        if (res.ok) {
+          setMovies(json);
+        }
       } catch (error) {
         console.log(error.message);
       }

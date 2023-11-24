@@ -30,7 +30,7 @@ const Login = () => {
             value={password} placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button type="submit" className="btn btn-primary mt-10">{loading ? <span className="loading"></span> : "Log in"}</button>
+          <button type="submit" className={`btn btn-primary mt-10 ${loading && "btn-disabled"}`}>{loading ? <span className="loading"></span> : "Log in"}</button>
         </form>
       </div>
     </div> 
