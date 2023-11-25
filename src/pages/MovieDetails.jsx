@@ -23,8 +23,9 @@ const MovieDetails = () => {
   }, [id]);
 
   return (
-    <div className="flex">
-      
+    <div className="container flex items-center justify-center">
+      <div className="min-w-[40%] min-h-[90vh] bg-white"></div>
+      <div className="min-w-[60%] min-h-[90vh] bg-red-200"></div>
     </div>
   )
 }
