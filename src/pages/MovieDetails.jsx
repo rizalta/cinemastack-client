@@ -23,17 +23,8 @@ const MovieDetails = () => {
   }, [id]);
 
   return (
-    <div className="hero max-h-[50%]" style={{ backgroundImage: `url(${BACDROP_BASE + movie.backdrop_path})` }}>
-      <div className="hero-overlay bg-opacity-60"></div>
-      <div className="hero-content pt-[100px] w-screen justify-between">
-        <img
-          src={POSTER_BASE + movie.poster_path} alt={movie.title} 
-          className="rounded-lg showdow-2xl max-w-sm"
-        /> 
-        <div className="max-w-md">
-          <h1 className="font-bold">{movie.title}</h1>
-        </div>
-      </div>
+    <div className="flex">
+      
     </div>
   )
 }

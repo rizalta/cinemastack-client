@@ -3,10 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Search = () => {
   const [movies, setMovies] = useState([]);
+  const [value, setValue] = useState("");
   const navigate = useNavigate();
 
-  const handleSearch = async (e) => {
-    const query = e.target.value;
+  const handleSearch = async (query) => {
     if (query === "") {
       setMovies([]);
       return;
@@ -22,16 +22,20 @@ const Search = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const query = e.target[0].value;
-    navigate("/search/" + query);
+    navigate("/search/" + value);
+    setValue("");
+    setMovies([]);
   }
   
   return (
     <form className="dropdown" onSubmit={handleSubmit}>
       <input 
         type="text" className="input input-bordered" tabIndex={0} 
-        placeholder="Search"
-        onChange={handleSearch}
+        placeholder="Search" value={value}
+        onChange={(e) => {
+          setValue(e.target.value);
+          handleSearch(e.target.value);
+        }}
       />
       <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-full">
         {movies.length == 0 ?
