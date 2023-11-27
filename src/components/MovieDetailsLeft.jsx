@@ -24,17 +24,21 @@ const MovieDetailsLeft = ({ movie }) => {
       </div>
       <div className="flex gap-2 mt-3">
         {movie.genres && movie.genres.map((genre) => (
-        <span key={genre['id']} className="badge badge-secondary mt-1">
+        <span key={genre['id']} className="badge badge-secondary mt-1 h-fit">
           {genre['name']}
         </span>))}
       </div>
-      <p className="mt-2">Language : <span>{movie.language}</span></p>
-      <p className="text-xl mt-2 text-warning">User Score</p>
-      <div role="progressbar" className="radial-progress bg-base-300 text-warning mt-2 drop-shadow-2xl"
-        style={{"--value": movie.vote_average * 10}}
-      >
-        {Math.floor(movie.vote_average * 10)}
-      </div>
+      <p className="mt-2 text-xl font-semibold">Language : <span className="font-normal">{movie.language}</span></p>
+      {movie.vote_average ?
+        <div>
+          <p className="text-xl mt-2 text-warning">User Score</p>
+          <div role="progressbar" className="radial-progress bg-base-300 text-warning mt-2 drop-shadow-2xl"
+            style={{"--value": movie.vote_average * 10}}
+          >
+            {Math.floor(movie.vote_average * 10)}
+        </div>
+      </div>: <p className="text-warning">No score available</p>}
+      
       <div className="mt-3">
         {movie.homepage &&
         <Link to={movie.homepage} target="_blank" className="underline text-primary">

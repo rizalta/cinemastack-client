@@ -2,13 +2,13 @@ import closeIcon from "../assets/close.png";
 
 const MovieTrailer = ({ trailer }) => {
   const handleClick = () => {
-    document.getElementById("modal1").showModal();
+    document.getElementById(trailer).showModal();
   }
 
   return (
     <div>
       <button className="btn btn-info" onClick={handleClick}>Watch Trailer</button>
-      <dialog id="modal1" className="modal">
+      <dialog id={trailer} className="modal">
         <div className="modal-box w-2/5 max-w-5xl">
           <div className="flex justify-between items-center pb-2">
             <h1 className="text-3xl">Watch Trailer</h1>

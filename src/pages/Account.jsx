@@ -2,6 +2,7 @@ import userIcon from "../assets/user.png";
 import infoIcon from "../assets/info.svg";
 
 import Username from "../components/Username";
+import DeleteAccount from "../components/DeleteAccount";
 
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -31,12 +32,13 @@ const Account = () => {
               </div>
             </div>
           </div>
-          <div>
+          <div className="flex gap-3">
             <Link to="change">
               <button className="btn btn-outline btn-info">
                 Change Password
               </button>
             </Link>
+            <DeleteAccount />
           </div>
         </div>
       </div>
