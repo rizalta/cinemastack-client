@@ -82,7 +82,7 @@ const Username = () => {
           </button>
         </div> : 
         <button
-          className="btn btn-outline"
+          className="btn btn-outline btn-info"
           onClick={() => setToggle(true)}
         >
           Change Username

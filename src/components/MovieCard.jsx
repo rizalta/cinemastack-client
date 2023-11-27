@@ -18,8 +18,11 @@ const MovieCard = ({ movie, stacks, setStacks }) => {
           <h1 className="card-title text-white">{movie.title}</h1>
         </Link>
         <p className="text-white text-lg">
-          <p className="font-bold">{movie.release_date.slice(0,4)}</p>
-          {movie.genre_ids.map((id) => (<p>{genres[id]}</p>))}
+          <span className="font-bold">{movie.release_date.slice(0,4)}<br/></span>
+          {movie.genre_ids.map((id) => (
+            <span key={id} className="badge badge-secondary mx-1">
+              {genres[id]}
+            </span>))}
         </p>
         <div className="self-center">
           <p className="pb-4 text-white">User Score</p>
@@ -27,7 +30,7 @@ const MovieCard = ({ movie, stacks, setStacks }) => {
         </div>
         <div className="card-actions justify-end">
           {isAuth ? 
-          <StacksDropdown movie={movie} stacks={stacks} setStacks={setStacks} /> : 
+          <StacksDropdown movie={movie} stacks={stacks} setStacks={setStacks} bottom={false} /> : 
           <button className="btn btn-disabled glass">Add</button>}
         </div>
       </div> 

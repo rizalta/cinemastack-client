@@ -1,22 +1,13 @@
 import userIcon from "../assets/user.png";
+import infoIcon from "../assets/info.svg";
 
 import Username from "../components/Username";
 
-import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Account = () => {
-  const user = useSelector((state) => state.auth.user);
-  const [username, setUsername] = useState(user.username);
-  const [email, setEmail] = useState(user.email);
-  const dispatch = useDispatch();
-  const [nameToggle, setNameToggle] = useState(false);
-
-  const handleCancel = () => {
-    setUsername(user.username);
-    setEmail(user.email);
-    setEditToggle(false);
-  }
+  const email = useSelector((state) => state.auth.user.email)
 
   return (
     <div className="h-screen w-full flex justify-center">
@@ -25,6 +16,28 @@ const Account = () => {
         <img src={userIcon} width="200px" className="bg-accent p-4 rounded-full" />
         <div className="flex flex-col gap-4 w-2/3 pl-10 mt-6">
           <Username />
+          <div className="flex w-full min-h-[90px] justify-start pt-2 items-start">
+            <div className="w-[20%]">
+              <h1 className="text-2xl pt-1 pl-1">Email</h1>
+            </div>
+            <div className="w-[40%]">
+              <p className="text-lg pt-2 pl-2">{email}</p>
+            </div>
+            <div>
+              <div className="tooltip tooltip-right" data-tip="Email cannot be changed">
+                <button className="btn btn-circle btn-ghost">
+                  <img src={infoIcon} />
+                </button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <Link to="change">
+              <button className="btn btn-outline btn-info">
+                Change Password
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

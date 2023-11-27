@@ -1,31 +1,46 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+import MovieDetailsLeft from "../components/MovieDetailsLeft";
+import MovieDetailsRight from "../components/MovieDetailsRight";
+
 const MovieDetails = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState({});
-  const POSTER_BASE = 'https://image.tmdb.org/t/p/w300/';
-  const BACDROP_BASE = 'https://image.tmdb.org/t/p/w1280/';
-
-  useEffect(() => {
-    const getMovie = async () => {
-      const apiUrl = import.meta.env.VITE_API_BASE_URL;
-      try {
-        const res = await fetch(apiUrl + "movies/" + id);
-        const json = await res.json();
+  const [loading, setLoading] = useState(true);
   
-        setMovie(json);
+
+  useEffect(() => {    
+    const getMovie = async () => {
+      try {
+        const res = await fetch(import.meta.env.VITE_API_BASE_URL + "movies/" + id);
+        const json = await res.json();
+
+        if (!res.ok) {
+          console.log(json.error);
+        } else {
+          setMovie(json);
+        }
       } catch (error) {
         console.log(error.message);
+      } finally {
+        setLoading(false);
       }
     }
     getMovie();
   }, [id]);
 
   return (
-    <div className="container flex items-center justify-center">
-      <div className="min-w-[40%] min-h-[90vh] bg-white"></div>
-      <div className="min-w-[60%] min-h-[90vh] bg-red-200"></div>
+    <div>
+      {!loading ? 
+      <div className="pb-12 bg-base-200 w-full h-full flex">
+        <div className="flex-[2]">
+          <MovieDetailsLeft movie={movie}/>
+        </div>
+        <div className="flex-[8]">
+          <MovieDetailsRight movie={movie}/>
+        </div>
+      </div> : <span className="loading"></span>}
     </div>
   )
 }

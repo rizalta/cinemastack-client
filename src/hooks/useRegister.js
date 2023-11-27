@@ -5,6 +5,7 @@ import { authActions } from "../features/AuthSlice";
 const useRegister = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [done, setDone] = useState(false);
   const dispatch = useDispatch();
 
   const apiUrl = import.meta.env.VITE_API_BASE_URL + "users/signup";
@@ -29,12 +30,15 @@ const useRegister = () => {
     if (res.ok) {
       setLoading(false);
       setError("");
-      dispatch(authActions.login(json));
-      localStorage.setItem("auth", JSON.stringify(json));
+      setDone(true);
+      setTimeout(() => {
+        dispatch(authActions.login(json));
+        localStorage.setItem("auth", JSON.stringify(json));
+      }, 1500);
     }
   }
 
-  return { error, loading, register, setError };
+  return { error, loading, done, register, setError };
 }
 
 export default useRegister;

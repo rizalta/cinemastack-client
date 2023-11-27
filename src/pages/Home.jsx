@@ -12,7 +12,7 @@ const Home = () => {
         const res = await fetch(apiUrl + tab);
         const json = await res.json();
         if (res.ok) {
-          setMovies(json);
+          setMovies(json.slice(0, 18));
         }
       } catch (error) {
         console.log(error.message);

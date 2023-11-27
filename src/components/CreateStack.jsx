@@ -42,7 +42,7 @@ const CreateStack = ({ id, setStacks }) => {
       <label htmlFor={`toggle${id}`} ><img src={closeIcon} onClick={() => setError("")} />
         <input
           type="text" placeholder="Enter stack name"
-          className="input input-bordered h-full w-[200px]"
+          className="input input-bordered h-full w-[150px]"
           value={stack} onChange={(e) => setStack(e.target.value)}
         />
         <img src={checkIcon} onClick={handleCreate} />
