@@ -4,10 +4,12 @@ import MovieTrailer from "../components/MovieTrailer";
 import useStacks from "../hooks/useStacks";
 import MovieCast from "./MovieCast";
 import SimilarMovies from "./SimilarMovies";
+import { useSelector } from "react-redux";
 
 const MovieDetailsRight = ({ movie }) => {
   const [stacks, setStacks] = useStacks();
   const BACKDROP_BASE = "https://image.tmdb.org/t/p/w1280";
+  const isAuth = useSelector((state) => state.auth.isAuthenticated);
 
   return (
     <div className="w-full h-full flex flex-col shadow-2xl rounded-lg">
@@ -27,7 +29,9 @@ const MovieDetailsRight = ({ movie }) => {
             </p>))}
         </div>
         <div className="flex-1 ml-20 gap-4 flex">
-          <StacksDropdown movie={movie} stacks={stacks} setStacks={setStacks} bottom={true} />
+          {isAuth ? 
+          <StacksDropdown movie={movie} stacks={stacks} setStacks={setStacks} bottom={true} /> : 
+          <button className="btn btn-disabled glass">Add</button>}
           <MovieTrailer trailer={movie.trailer}/>       
         </div>
       </div>
