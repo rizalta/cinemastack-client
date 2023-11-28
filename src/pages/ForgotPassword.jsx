@@ -1,18 +1,15 @@
 import checkIcon from "../assets/check.png";
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
 
-import useLogin from "../hooks/useLogin";
-
-const Login = () => {
-  const { loading, error, done, login } = useLogin();
+const ForgotPassword = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [done, setDone] = useState(false);
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(email, password);
   }
 
   return (
@@ -23,33 +20,23 @@ const Login = () => {
       </div>
       <div role="alert" className={`alert alert-success mt-[80px] w-auto min-w-[410px] ${!done && "hidden"}`}>
         <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-        <span>Logged in successfully</span>
+        <span>Check your inbox for password reset link</span>
       </div>
       <div className="card card-bordered shadow-xl px-8 py-8 bg-base-200">
         <form className="card-body" onSubmit={handleSubmit}>
           <h1 className="card-title self-center text-secondary text-2xl mb-5">
-            Log in
+            Forgot Password
           </h1>
           <input type="email" className="input" 
             value={email} placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
           />
-          <input type="password" className="input" 
-            value={password} placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
           <button type="submit" className={`btn btn-primary mt-10 ${loading && "btn-disabled"}`}>
-            {done ? <img src={checkIcon} /> : loading ? <span className="loading"></span> : "Log in"}
+            {done ? <img src={checkIcon} /> : loading ? <span className="loading"></span> : "Confirm"}
           </button>
-          <Link 
-            className="self-center underline text-info pt-1"
-            to="/forgot"
-          >
-            Forgot password?
-          </Link>
         </form>
       </div>
     </div> 
   )
 }
-export default Login;
+export default ForgotPassword;

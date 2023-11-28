@@ -10,6 +10,8 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [otp, setOtp] = useState("");
   const [otpDone, setOtpDone] = useState(false);
+  const [otpLoading, setOtpLoading] = useState(false);
+  const apiUrl = import.meta.env.VITE_API_BASE_URL + "users/otp";
 
   const { error, loading, done, register, setError } = useRegister();
 
@@ -19,20 +21,28 @@ const Register = () => {
   }
 
   const sendOtp = async () => {
-    const res = await fetch(import.meta.env.VITE_API_BASE_URL + "users/otp", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
-    });
-
-    const json = await res.json();
-
-    if (!res.ok) {
-      setError(json.error);
-    } else {
-      setError("");
-      setOtpDone(true);
+    setOtpLoading(true);
+    try {
+      const res = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+  
+      const json = await res.json();
+  
+      if (!res.ok) {
+        setError(json.error);
+      } else {
+        setError("");
+        setOtpDone(true);
+      } 
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setOtpLoading(false);
     }
+    
   }
 
   return (
@@ -71,7 +81,7 @@ const Register = () => {
               className={email && !otpDone ? "btn btn-accent" : "btn btn-disabled"}
               onClick={sendOtp}
             >
-              {otpDone ? "OTP Sent": "Get OTP"}
+              {otpDone ? "OTP Sent": otpLoading ? <span className="loading"></span> : "Get OTP"}
             </button>
           </div>
           <button type="submit" className="btn btn-primary mt-10">

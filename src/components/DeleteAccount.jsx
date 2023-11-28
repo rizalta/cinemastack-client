@@ -83,7 +83,7 @@ const DeleteAccount = () => {
           </form>
           <span className="self-start h-7 ml-16 text-error pt-2">{error}</span>
         </div> :
-        <div className="modal-box flex justify-center items-center bg-error">
+        <div className="modal-box flex justify-center items-center bg-error shadow-lg">
           <h3 className="text-2xl text-error-content">Account Deleted</h3>
         </div>}
       </dialog>

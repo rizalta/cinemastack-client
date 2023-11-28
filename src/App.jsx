@@ -10,7 +10,8 @@ import Account from "./pages/Account";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ChangePassword from "./pages/ChangePassword";
-import ResetPassword from "./pages/ResetPassword";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./ResetPassword";
 
 const App = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -30,7 +31,10 @@ const App = () => {
           <Route path="/account">
             <Route index element={isAuthenticated ? <Account /> : <Navigate to="/login" />} />
             <Route path="change" element={isAuthenticated ? <ChangePassword /> : <Navigate to="/login" />} />
-            <Route path="recover" element={!isAuthenticated ? <ResetPassword /> : <Navigate to="/account" />} />
+          </Route>
+          <Route path="/forgot">
+            <Route index element={!isAuthenticated ? <ForgotPassword /> : <Navigate to="/" />} />
+            <Route path="reset" element={!isAuthenticated ? <ResetPassword /> : <Navigate to="/" />} />
           </Route>
         </Route>
       </Routes>
