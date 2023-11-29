@@ -15,7 +15,7 @@ const Username = () => {
     setLoading(true);
     try {
       const res = await fetch(apiUrl, {
-        method: "POST",
+        method: "PATCH",
         headers: {
           "Authorization": `Bearer ${user.token}`,
           "Content-Type": "application/json",

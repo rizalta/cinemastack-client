@@ -11,7 +11,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ChangePassword from "./pages/ChangePassword";
 import ForgotPassword from "./pages/ForgotPassword";
-import ResetPassword from "./ResetPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 const App = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);

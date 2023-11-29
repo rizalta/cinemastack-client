@@ -7,9 +7,32 @@ const ForgotPassword = () => {
   const [error, setError] = useState("");
   const [done, setDone] = useState(false);
   const [email, setEmail] = useState("");
+  const apiUrl = import.meta.env.VITE_API_BASE_URL + "users/forgot";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    try {
+      const res = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+      
+      const json = await res.json();
+      if (!res.ok) {
+        setError(json.error);
+      } else {
+        setDone(true);
+        setError("");
+      }
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -31,7 +54,7 @@ const ForgotPassword = () => {
             value={email} placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
           />
-          <button type="submit" className={`btn btn-primary mt-10 ${loading && "btn-disabled"}`}>
+          <button type="submit" className={`btn btn-primary mt-10 ${loading || done && "btn-disabled"}`}>
             {done ? <img src={checkIcon} /> : loading ? <span className="loading"></span> : "Confirm"}
           </button>
         </form>
