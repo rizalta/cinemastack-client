@@ -1,6 +1,6 @@
 import checkIcon from "../assets/check.png";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import useRegister from "../hooks/useRegister";
 
@@ -11,9 +11,22 @@ const Register = () => {
   const [otp, setOtp] = useState("");
   const [otpDone, setOtpDone] = useState(false);
   const [otpLoading, setOtpLoading] = useState(false);
+  const [countdown, setCountdown] = useState(60);
   const apiUrl = import.meta.env.VITE_API_BASE_URL + "users/otp";
 
   const { error, loading, done, register, setError } = useRegister();
+
+  useEffect(() => {
+    let intervalId;
+    if (countdown > 0 && otpDone) {
+      intervalId = setInterval(() => {
+        setCountdown((prev) => prev - 1);
+      }, 1000);
+    } else if (countdown === 0 && otpDone) {
+      setOtpDone(false);
+    }
+    return () => clearInterval(intervalId);
+  }, [countdown, otpDone]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,10 +45,15 @@ const Register = () => {
       const json = await res.json();
   
       if (!res.ok) {
+        if (res.status === 401) {
+          setCountdown(60 - parseInt(json.time));
+          setOtpDone(true);
+        }
         setError(json.error);
       } else {
         setError("");
         setOtpDone(true);
+        setCountdown(60);      
       } 
     } catch (error) {
       setError(error.message);
@@ -87,6 +105,13 @@ const Register = () => {
           <button type="submit" className="btn btn-primary mt-10">
             {done ? <img src={checkIcon} /> : loading ? <span className="loading"></span> : "Register"}
           </button>
+          <div className={`flex gap-2 items-end justify-center pt-3 ${otpDone ? "visible" : "invisible"}`}>
+            <span>Resend OTP after</span>
+            <span className="countdown text-3xl text-warning">
+              <span style={{"--value": countdown}}></span>
+            </span>
+            <span>seconds</span>
+          </div>
         </form>
       </div>
     </div> 
