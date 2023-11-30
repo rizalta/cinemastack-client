@@ -25,7 +25,11 @@ const ResetPassword = () => {
       });
       const json = await res.json();
       if (!res.ok) {
-        setError(json.error);
+        if (json.error === "jwt expired") {
+          setError("Request Link expired. Request again");
+        } else {
+          setError(json.error);
+        }
         setPassword("");
       } else {
         setError("");

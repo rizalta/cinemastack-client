@@ -73,12 +73,12 @@ const Register = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <div className="flex gap-2 justify-between">
-            <input type="text" className="input w-[200px]" 
+            <input type="text" className="input w-[65%]" 
               placeholder="OTP" value={otp}
               onChange={(e) => setOtp(e.target.value)}
             />
             <button type="button" 
-              className={email && !otpDone ? "btn btn-accent" : "btn btn-disabled"}
+              className={`btn max-w-[35%] w-[35%] btn-accent ${!email || otpDone && "btn-disabled"}`}
               onClick={sendOtp}
             >
               {otpDone ? "OTP Sent": otpLoading ? <span className="loading"></span> : "Get OTP"}
